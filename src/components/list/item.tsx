@@ -2,41 +2,41 @@ import { Check, Trash } from 'lucide-react'
 import { ITask } from '../../pages/home'
 
 interface Props {
-  data: ITask
-  removeTask: (id: number) => void
-  toggleTaskStatus: ({ id, value }: { id: number; value: boolean }) => void
+  data: ITask;
+  removeTask: (id: string) => void;
+  toggleTaskStatus: ({ id, value }: { id: string; value: boolean }) => void;
 }
 
 export function Item({ data, removeTask, toggleTaskStatus }: Props) {
   function handleTaskToggle() {
-    toggleTaskStatus({ id: data.id, value: !data.isChecked })
+    toggleTaskStatus({ id: data.id, value: !data.is_completed })
   }
 
   function handleRemove() {
-    removeTask(data.id)
+    removeTask(data?.id)
   }
 
   return (
-    <div className="flex flex-1 gap-3 items-center justify-between bg-gray-500 border border-solid border-gray-400">
+    <div className="flex flex-1 gap-3 items-center justify-between p-4 rounded-lg bg-gray-500 border border-solid border-gray-400">
       <div className='flex'>
-        <label className='flex p-1 items-center gap-x-3' htmlFor="checkbox" onClick={handleTaskToggle}>
-          <input className='hidden' readOnly type="checkbox" checked={data.isChecked} />
+        <label className='flex p-1 items-center gap-3' htmlFor="checkbox" onClick={handleTaskToggle}>
+          <input className='hidden' readOnly type="checkbox" checked={data.is_completed} />
           <span
             className={`rounded-full h-5 w-5 flex items-center justify-center ${
-              data.isChecked
+              data.is_completed
                 ? 'border-2 border-solid border-purple-dark bg-purple-light'
                 : 'border-2 border-solid border-blue-default bg-blue-light'
             }`}
           >
-            {data.isChecked && <Check size={12} />}
+            {data.is_completed && <Check size={12} />}
           </span>
 
           <p
             className={`font-sm leading-5 select-none transition ${
-              data.isChecked ? 'underline text-gray-300' : ''
+              data.is_completed ? 'line-through text-gray-300' : ''
             }`}
           >
-            {data.text}
+            {data.task_description}
           </p>
         </label>
       </div>
